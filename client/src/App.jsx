@@ -71,7 +71,6 @@ export default function FlowerShop() {
           i.id === product.id ? { ...i, quantity: newQuantity } : i,
         );
       } else if (delta > 0) {
-        // Adding a new item to cart
         if (product.count > 0) {
           return [...prev, { ...product, quantity: 1 }];
         } else {
@@ -79,7 +78,7 @@ export default function FlowerShop() {
           return prev;
         }
       }
-      return prev; // Should not happen if logic is correct
+      return prev;
     });
   };
 
@@ -267,7 +266,7 @@ export default function FlowerShop() {
               <div className="flex flex-col gap-5 mt-10">
                 <button
                   onClick={sendOrder}
-                  disabled={!phone || cart.length === 0}
+                  disabled={cart.length === 0}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-semibold text-xl transition-colors disabled:bg-blue-300 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
                 >
                   🚚 Buyurtma berish
