@@ -9,7 +9,6 @@ const url = "https://9c12531e16df.ngrok-free.app/";
 export default function FlowerShop() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
-  const [phone, setPhone] = useState("");
   const [imageUrls, setImageUrls] = useState({});
 
   console.log(`${url}products`);
@@ -86,7 +85,7 @@ export default function FlowerShop() {
     cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
   const sendOrder = () => {
-    if (!phone || cart.length === 0) return;
+    if (cart.length === 0) return;
 
     const order = {
       items: cart.map(({ id, quantity, price }) => ({
@@ -101,7 +100,6 @@ export default function FlowerShop() {
       ? tg.sendData(JSON.stringify(order))
       : alert("Buyurtma yuborildi (test)");
     setCart([]);
-    setPhone("");
   };
 
   const resolveImage = (image) => {
