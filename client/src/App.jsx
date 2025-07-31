@@ -11,19 +11,19 @@ export default function FlowerShop() {
   const [phone, setPhone] = useState("");
   const [imageUrls, setImageUrls] = useState({});
 
+  const url = "https://4e41d4c7865f.ngrok-free.app/";
+
   useEffect(() => {
     if (tg?.ready) tg.ready();
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/products");
+        const res = await fetch(`${url}products`);
         const data = await res.json();
         const urls = {};
         await Promise.all(
           data.map(async (product) => {
             if (product.image && product.image.startsWith("AgACAg")) {
-              const res = await fetch(
-                `http://127.0.0.1:8000/file/${product.image}`,
-              );
+              const res = await fetch(`${url}file/${product.image}`);
               const file = await res.json();
               urls[product.image] = file.url;
             }
