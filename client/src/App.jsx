@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Minus, Plus, Trash2, ShoppingCart, Phone } from "lucide-react";
 
 const tg = typeof window !== "undefined" ? window.Telegram?.WebApp : {};
+const url = "https://4e41d4c7865f.ngrok-free.app/";
 
 export default function FlowerShop() {
   const [products, setProducts] = useState([]);
@@ -11,19 +12,31 @@ export default function FlowerShop() {
   const [phone, setPhone] = useState("");
   const [imageUrls, setImageUrls] = useState({});
 
-  const url = "https://4e41d4c7865f.ngrok-free.app/";
+  console.log(`${url}products`);
 
   useEffect(() => {
     if (tg?.ready) tg.ready();
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${url}products`);
+        const res = await fetch(`${url}products`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "true",
+          },
+        });
         const data = await res.json();
         const urls = {};
         await Promise.all(
           data.map(async (product) => {
             if (product.image && product.image.startsWith("AgACAg")) {
-              const res = await fetch(`${url}file/${product.image}`);
+              const res = await fetch(`${url}file/${product.image}`, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  "ngrok-skip-browser-warning": "true",
+                },
+              });
               const file = await res.json();
               urls[product.image] = file.url;
             }
@@ -32,6 +45,7 @@ export default function FlowerShop() {
         setImageUrls(urls);
         setProducts(data);
       } catch (err) {
+        console.log(err);
         console.error("Mahsulotlarni olishda xatolik:", err);
       }
     };
