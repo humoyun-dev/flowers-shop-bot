@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Minus, Plus, Trash2, ShoppingCart, Phone } from "lucide-react";
 
-const tg = typeof window !== "undefined" ? window.Telegram?.WebApp : {};
+const tg = window.Telegram?.WebApp;
 const url = "https://9c12531e16df.ngrok-free.app/";
 
 export default function FlowerShop() {
