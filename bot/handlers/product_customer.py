@@ -9,9 +9,11 @@ import json
 
 router = Router()
 
+
 class OrderFSM(StatesGroup):
     AWAITING_PHONE = State()
     AWAITING_LOCATION = State()
+
 
 @router.message(F.text == "/start")
 async def customer_start(message: Message, state: FSMContext):
@@ -21,6 +23,7 @@ async def customer_start(message: Message, state: FSMContext):
     )
     await state.set_state(OrderFSM.AWAITING_PHONE)
     await message.answer("Ro'yxatdan o'tish uchun telefon raqamingizni yuboring:", reply_markup=kb)
+
 
 @router.message(OrderFSM.AWAITING_PHONE)
 async def receive_phone(message: Message, state: FSMContext):
@@ -32,11 +35,13 @@ async def receive_phone(message: Message, state: FSMContext):
 
     kb = ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text="🛍 Mahsulotlarni ko‘rish", web_app=WebAppInfo(url="https://your-webapp-url.com"))]
+            [KeyboardButton(text="🛍 Mahsulotlarni ko‘rish",
+                            web_app=WebAppInfo(url="https://flowers-two-red.vercel.app/"))]
         ],
         resize_keyboard=True
     )
     await message.answer("Ro'yxatdan o'tdingiz! Endi mahsulotlarni ko‘rishingiz mumkin:", reply_markup=kb)
+
 
 @router.message(F.web_app_data)
 async def process_order_from_webapp(message: Message, state: FSMContext):
@@ -51,6 +56,7 @@ async def process_order_from_webapp(message: Message, state: FSMContext):
                              ))
     except Exception as e:
         await message.answer("Buyurtma ma'lumotlarini qabul qilishda xatolik yuz berdi.")
+
 
 @router.message(OrderFSM.AWAITING_LOCATION)
 async def finalize_order(message: Message, state: FSMContext):
