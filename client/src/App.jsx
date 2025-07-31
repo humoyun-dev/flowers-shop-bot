@@ -12,7 +12,7 @@ export default function FlowerShop() {
   const [imageUrls, setImageUrls] = useState({});
 
   useEffect(() => {
-    if (tg?.ready) tg.ready();
+    tg.ready();
     const fetchProducts = async () => {
       try {
         const res = await fetch(`${url}products`, {
