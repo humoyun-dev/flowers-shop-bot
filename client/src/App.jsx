@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Minus, Plus, Trash2, ShoppingCart, Phone } from "lucide-react";
 
 const tg = window.Telegram.WebApp;
-const url = "https://9c12531e16df.ngrok-free.app/";
+const url = "https://ac949ff0c6b1.ngrok-free.app/";
 
 export default function FlowerShop() {
   const [products, setProducts] = useState([]);
